@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aksi</title>
+
+  <link rel="stylesheet" href="assets/css/main/app.css" />
+  <style>
+    #tabelHasil {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 12px;
+    }
+
+    #tabelHasil caption {
+      text-align: center;
+      caption-side: top;
+      font-size: 30 px;
+      font-weight: 600;
+      font-family: "Poppins", sans-serif;
+      background: -webkit-linear-gradient(right,
+          #56d8e4,
+          #9f01ea,
+          #56d8e4,
+          #9f01ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #tabelHasil th,
+    td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    #tabelHasil td {
+      border: 1px solid #ddd;
+    }
+
+    #tabelHasil tr:nth-child(even) {
+      background-color: #f2f2f2
+    }
+
+    #tabelHasil th {
+      background: linear-gradient(115deg, #9f01ea 10%, #56d8e4 90%);
+      color: white;
+    }
+
+    #tabelHasil th .lebar20 {
+      width: 20%;
+    }
+  </style>
+  <link rel="shortcut icon" href="https://cdn-icons-png.freepik.com/512/8308/8308851.png" type="image/png" />
+
+  <link rel="stylesheet" href="assets/css/shared/iconly.css" />
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const data_store = JSON.parse(localStorage.getItem("loggedIn"));
+      if (localStorage.getItem("status") !== "true") {
+        window.location.href = "index.html";
+      }
+      document.getElementById("skpd").innerHTML = data_store.akronim;
+      // document.getElementById("skpd_judul").innerHTML = data_store.akronim;
+      document.getElementById("identity").innerHTML = data_store.akronim;
+      if ((data_store.id_role === "1")) {
+        document.getElementById("role").innerHTML = "Admin";
+      } else if ((data_store.id_role === "2")) {
+        document.getElementById("role").innerHTML = "SKPD";
+      } else {
+        document.getElementById("role").innerHTML = "Logout";
+      }
+
+      // cek dinkes
+      let btn = document.getElementById("BtnPersediaan");
+      let btnAlter = document.getElementById("alterBtnPersediaan");
+      if (data_store.username === "dinkes") {
+        btn.href = data_store.link_stock;
+        btn.target = "_blank";
+        btnAlter.classList.toggle("d-none");
+        btnAlter.href;
+      } else if (data_store.username === "disdik") {
+        btn.href = data_store.link_stock;
+        btn.target = "_blank";
+      } else {
+        btn.href = data_store.link_stock;
+        btn.target = "_blank";
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <div id="main" class="layout-horizontal">
+      <header class="mb-5 sticky-top">
+        <div class="header-top">
+          <div class="container">
+            <div class="logo">
+              <a href="dashboard.html"><img src="assets/images/logo/Sampang.png" alt="Logo" /> Aset
+                Alternate</a>
+            </div>
+            <div class="header-top-right">
+              <div class="dropdown">
+                <a href="#" id="topbarUserDropdown"
+                  class="user-dropdown d-flex align-items-center dropend dropdown-toggle" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <div class="avatar avatar-md2">
+                    <img src="assets/images/logo/Pengurus Barang Sampang.png" alt="Avatar" />
+                  </div>
+                  <div class="text">
+                    <h6 class="user-dropdown-name" id="skpd">SAMPANG</h6>
+                    <p id="role" class="user-dropdown-status text-sm text-muted">
+                      Member
+                    </p>
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown">
+                  <li><a class="dropdown-item" href="#">My Account</a></li>
+                  <li><a class="dropdown-item" href="#">Settings</a></li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" onclick="logout(event)">Logout</a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Burger button responsive -->
+              <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <nav class="main-navbar">
+          <div class="container">
+            <ul>
+              <li class="menu-item">
+                <a href="dashboard.html" class="menu-link">
+                  <i class="bi bi-grid-fill"></i>
+                  <span>Data Kendaraan</span>
+                </a>
+              </li>
+              <br />
+              <li class="menu-item active-menu">
+                <a href="action.html" class="menu-link">
+                  <i class="bi bi-inboxes-fill"></i>
+                  <span>Aksi</span>
+                </a>
+              </li>
+              <br />
+              <li class="menu-item" style="justify-content: end; align-items: end;">
+                <a href="https://docs.google.com/spreadsheets/d/1MCaA89OdQJwGPfXhT-Z5GzJG2kkoAoY71JXyoWd9QXE/edit?gid=81268867#gid=81268867"
+                  class="menu-link" target="_blank">
+                  <i class="bi bi-folder-fill"></i>
+                  <span>Kode Barang 108</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <div class="content-wrapper container">
+        <div class="page-heading">
+          <h3>Aksi <span id="skpd_judul"></span></h3>
+        </div>
+        <div class="page-content">
+          <section class="row">
+            <div class="col-md-12">
+
+              <div class="card">
+                <div class="card-body">
+                  <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" id="v-pills-search-tab" data-bs-toggle="pill" href="#v-pills-search"
+                        role="tab" aria-controls="v-pills-search" aria-selected="true">Cari Data</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="v-pills-update-tab" data-bs-toggle="pill" href="#v-pills-update"
+                        role="tab" aria-controls="v-pills-update" aria-selected="false">Update Data</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="v-pills-add-tab" data-bs-toggle="pill" href="#v-pills-add" role="tab"
+                        aria-controls="v-pills-add" aria-selected="false">Tambah Data</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="v-pills-delete-tab" data-bs-toggle="pill" href="#v-pills-delete"
+                        role="tab" aria-controls="v-pills-delete" aria-selected="false">Hapus Data</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="v-pills-search" role="tabpanel"
+                      aria-labelledby="v-pills-search-tab">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <form id="myFormBPKB" onsubmit="searchBPKB(); return false;" class="form">
+                              <h4 class="title">Cari Kendaraan Dinas Kabupaten Sampang</h4>
+                              <p class="message"></p>
+                              <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-12">
+                                  <fieldset>
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Cari Berdasarkan</span>
+                                      </div>
+                                      <select id="berdasar" name="berdasar" class="input form-control"
+                                        style="max-width: max-content;">
+                                        <option value="Nopol">Nopol</option>
+                                        <option value="Nosin">Nomor Mesin</option>
+                                        <option value="Norangka">Nomor Rangka</option>
+                                      </select>
+                                      <input type="text" aria-label="Last name" class="form-control"
+                                        placeholder="Masukkan Nopol" required id="kataKunci" autocomplete="off">
+                                    </div>
+                                  </fieldset>
+                                  <script>
+                                    document
+                                      .getElementById("berdasar")
+                                      .addEventListener("change", function () {
+                                        var selectedOption = this.options[this.selectedIndex].value;
+                                        if (selectedOption == "Nopol") {
+                                          var isi = "Nopol";
+                                        } else if (selectedOption == "Nosin") {
+                                          var isi = "Nomor Mesin";
+                                        } else {
+                                          var isi = "Nomor Rangka";
+                                        }
+                                        document.getElementById("kataKunci").placeholder = "Masukkan " + isi;
+                                      });
+                                  </script>
+                                </div>
+                              </div>
+                              <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1" id="cariBPKB"
+                                  onclick="Cari()">Cari</button>
+                                <button type="button" class="btn btn-secondary me-1 mb-1 d-none" id="loading" disabled>
+                                  Loading
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="card">
+                              <div class="card-body">
+                                <h6 class="card-title">Daftar Perpanjangan</h6>
+                                <ul class="list-group" id="itemList">
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span> M 1174 NP</span>
+                                    <span class="badge bg-warning badge-pill badge-round ml-1">X</span>
+                                  </li>
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span> M 4857 NP</span>
+                                    <span class="badge bg-info badge-pill badge-round ml-1">X</span>
+                                  </li>
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span> M 1067 NP</span>
+                                    <span class="badge bg-danger badge-pill badge-round ml-1">X</span>
+                                  </li>
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>M 5410 NP</span>
+                                    <span class="badge bg-secondary badge-pill badge-round ml-1">X</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="tempatHasil"></div>
+                        <div class="col-12 d-flex justify-content-end">
+                          <button type="button" class="btn btn-primary me-1 mb-1 d-none"
+                            id="tambah-daftar">Tambahkan</button>
+                        </div>
+                      </div>
+                      <script>
+                        function Cari() {
+                          const btnTambah = document.getElementById("tambah-daftar");
+                          const btnSubmit = document.getElementById("cariBPKB");
+                          const btnLoad = document.getElementById("loading");
+                          const tempatHasil = document.getElementById("tempatHasil");
+                          // const berdasar = document.getElementById("berdasar").value;
+                          const kataKunci_input = document.getElementById("kataKunci").value;
+                          const kataKunci = upperCase(kataKunci_input);
+                          if (!btnTambah.classList.contains('d-none')) {
+                            btnTambah.classList.add('d-none');
+                          }
+                          tempatHasil.innerHTML = "";
+
+                          btnSubmit.classList.toggle("d-none");
+                          btnLoad.classList.toggle("d-none");
+
+                          const data_coba = JSON.parse(localStorage.getItem("dataKendaraan"));
+                          const identitas_kendaraan = data_coba.find(item => item.No_Pol === kataKunci);
+                          if (identitas_kendaraan) {
+                            const dataHasil = `<table id="tabelHasil"  class="table table-lg">
+                                                    <caption>
+                                                        <h5 class="caption">Hasil Pencarian</h5>
+                                                    </caption>
+                                                    <tr>
+                                                        <th class="lebar20">SKPD</th>
+                                                        <td colspan="2">`+ identitas_kendaraan.SKPD + `</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">Spek Kendaraan</td>
+                                                        <td>`+ identitas_kendaraan.Spesifikasi_Barang_MERK + `</td>
+                                                        <th>`+ identitas_kendaraan.Nama_Barang + `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">Nopol</td>
+                                                        <td>`+ identitas_kendaraan.No_Pol + `</td>
+                                                        <td>Nomor Urut BI : `+ identitas_kendaraan.No_Urut_di_BI + `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">No. Mesin</td>
+                                                        <td>`+ identitas_kendaraan.No_Mesin + `</td>
+                                                        <td>Nomor Urut Data : `+ identitas_kendaraan.No_ + `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">No. Rangka</td>
+                                                        <td colspan="2">`+ identitas_kendaraan.No_Rangka + `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">No. BPKB</td>
+                                                        <td>`+ identitas_kendaraan.No_BPKB + `</td>
+                                                        <th>Berlaku Sampai `+ identitas_kendaraan.Tanggal_Jatuh_Tempo + `</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">Pemegang</td>
+                                                        <td>`+ identitas_kendaraan.Nama_Pemakai + `</td>
+                                                        <td>`+ identitas_kendaraan.Jabatan + `</td>
+                                                    </tr>
+                                                  </table>
+                                                  `;
+                            tempatHasil.innerHTML = dataHasil;
+                            localStorage.setItem("identity-Vehicle", JSON.stringify(identitas_kendaraan));
+                            btnTambah.classList.toggle('d-none');
+                          } else {
+                            document.getElementById("tempatHasil").innerHTML =
+                              '<div  class="form"><div class="caption"><h6>Data tidak ditemukan.</h6></div></div>';
+                          }
+                          btnSubmit.classList.toggle("d-none");
+                          btnLoad.classList.toggle("d-none");
+                          document.getElementById("kataKunci").value = "";
+                        }
+
+                        document.getElementById('tambah-daftar').addEventListener("click", function () {
+                          const data_perpanjang = JSON.parse(localStorage.getItem("identity-Vehicle"));
+
+                          const dataSudahAda = localStorage.getItem("dataPerpanjang");
+                          // Inisialisasi array untuk menyimpan data
+                          let dataArray = [];
+                          if (dataSudahAda) {
+                            dataArray = JSON.parse(dataSudahAda);
+
+                          } else {
+                            dataArray = [];
+                          }
+                          // Tambahkan objek baru ke array
+                          dataArray.push(data_perpanjang);
+                          // Simpan kembali array yang sudah diperbarui ke localStorage
+                          localStorage.setItem('dataPerpanjang', JSON.stringify(dataArray));
+                        })
+
+                        function upperCase(teks) {
+                          var berdasar = document.getElementById("berdasar").value;
+
+                          if (berdasar == "Nopol") {
+                            // Pisahkan plat nomor menjadi bagian-bagian
+                            let platNomor = teks.trim().replace(/\s+/g, "");
+                            // Gunakan ekspresi reguler untuk memisahkan bagian-bagian plat nomor
+                            let match = platNomor.match(/^([a-zA-Z]+)(\d+)([a-zA-Z]+)$/);
+                            if (match) {
+                              // Ambil bagian-bagian yang ditemukan
+                              let bagian1 = match[1].toUpperCase();
+                              let bagian2 = match[2];
+                              let bagian3 = match[3].toUpperCase();
+                              // Gabungkan kembali bagian-bagian tersebut dengan format yang diinginkan
+                              let platNomorBaru = `${bagian1} ${bagian2} ${bagian3}`;
+                              return platNomorBaru;
+                            }
+                          } else {
+                            return teks;
+                          }
+                        }
+                      </script>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-update" role="tabpanel" aria-labelledby="v-pills-update-tab">
+                      Integer interdum diam eleifend metus lacinia, quis gravida eros mollis. Fusce
+                      non sapien sit amet magna dapibus
+                      ultrices. Morbi tincidunt magna ex, eget faucibus sapien bibendum non. Duis a
+                      mauris ex. Ut finibus risus sed massa
+                      mattis porta. Aliquam sagittis massa et purus efficitur ultricies.
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab">
+                      Integer pretium dolor at sapien laoreet ultricies. Fusce congue et lorem id
+                      convallis. Nulla volutpat tellus nec
+                      molestie finibus. In nec odio tincidunt eros finibus ullamcorper. Ut sodales,
+                      dui nec posuere finibus, nisl sem aliquam
+                      metus, eu accumsan lacus felis at odio.
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
+                      Sed lacus quam, convallis quis condimentum ut, accumsan congue massa.
+                      Pellentesque et quam vel massa pretium ullamcorper
+                      vitae eu tortor.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <footer>
+        <div class="container">
+          <div class="footer clearfix mb-0 text-muted">
+            <div class="float-start">
+              <p><span id="tahun_footer"></span> &copy; Ismail Aset</p>
+              <script>
+                document.getElementById("tahun_footer").textContent =
+                  new Date().getFullYear();
+              </script>
+            </div>
+            <div class="float-end">
+              <p>
+                Crafted with
+                <span class="text-danger"><i class="bi bi-heart"></i></span>
+                by
+                <a href="https://wa.me/81913333320" target="_blank">Ismail Aset</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/pages/horizontal-layout.js"></script>
+
+  <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/js/pages/dashboard.js"></script>
+  <script src="api.js"></script>
+  <script src="script.js"></script>
+  <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
+  <script src="assets/js/pages/simple-datatables.js"></script>
+</body>
+
+</html>
