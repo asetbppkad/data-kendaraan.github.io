@@ -64,9 +64,9 @@
       document.getElementById("skpd").innerHTML = data_store.akronim;
       // document.getElementById("skpd_judul").innerHTML = data_store.akronim;
       document.getElementById("identity").innerHTML = data_store.akronim;
-      if ((data_store.id_role = 1)) {
+      if ((data_store.id_role === "1")) {
         document.getElementById("role").innerHTML = "Admin";
-      } else if ((data_store.id_role = 2)) {
+      } else if ((data_store.id_role === "2")) {
         document.getElementById("role").innerHTML = "SKPD";
       } else {
         document.getElementById("role").innerHTML = "Logout";
@@ -174,190 +174,189 @@
 
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-3">
-                      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                        aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-search-tab" data-bs-toggle="pill" href="#v-pills-search"
-                          role="tab" aria-controls="v-pills-search" aria-selected="true">Cari Data</a>
-                        <a class="nav-link" id="v-pills-update-tab" data-bs-toggle="pill" href="#v-pills-update"
-                          role="tab" aria-controls="v-pills-update" aria-selected="false">Update Data</a>
-                        <a class="nav-link" id="v-pills-add-tab" data-bs-toggle="pill" href="#v-pills-add" role="tab"
-                          aria-controls="v-pills-add" aria-selected="false">Tambah Data</a>
-                        <a class="nav-link" id="v-pills-delete-tab" data-bs-toggle="pill" href="#v-pills-delete"
-                          role="tab" aria-controls="v-pills-delete" aria-selected="false">Hapus Data</a>
-                      </div>
-                    </div>
-                    <div class="col-9">
-                      <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-search" role="tabpanel"
-                          aria-labelledby="v-pills-search-tab">
-                          <div class="container">
-                            <form id="myFormBPKB" onsubmit="searchBPKB(); return false;" class="form">
-                              <h4 class="title">Cari Kendaraan Dinas Kabupaten Sampang</h4>
-                              <p class="message"></p>
-                              <div class="row" style="margin-bottom: 15px;">
-                                <div class="col-12">
-                                  <fieldset>
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">Cari Berdasarkan</span>
-                                      </div>
-                                      <select id="berdasar" name="berdasar" class="input form-control"
-                                        style="max-width: max-content;">
-                                        <option value="Nopol">Nopol</option>
-                                        <option value="Nosin">Nomor Mesin</option>
-                                        <option value="Norangka">Nomor Rangka</option>
-                                      </select>
-                                      <input type="text" aria-label="Last name" class="form-control"
-                                        placeholder="Masukkan Nopol" required id="kataKunci" autocomplete="off">
-                                    </div>
-                                  </fieldset>
-                                  <script>
-                                    document
-                                      .getElementById("berdasar")
-                                      .addEventListener("change", function () {
-                                        var selectedOption = this.options[this.selectedIndex].value;
-                                        if (selectedOption == "Nopol") {
-                                          var isi = "Nopol";
-                                        } else if (selectedOption == "Nosin") {
-                                          var isi = "Nomor Mesin";
-                                        } else {
-                                          var isi = "Nomor Rangka";
-                                        }
-                                        document.getElementById("kataKunci").placeholder = "Masukkan " + isi;
-                                      });
-                                  </script>
+                  <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link active" id="v-pills-search-tab" data-bs-toggle="pill" href="#v-pills-search"
+                        role="tab" aria-controls="v-pills-search" aria-selected="true">Cari Data</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="v-pills-update-tab" data-bs-toggle="pill" href="#v-pills-update"
+                        role="tab" aria-controls="v-pills-update" aria-selected="false">Update Data</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="v-pills-add-tab" data-bs-toggle="pill" href="#v-pills-add" role="tab"
+                        aria-controls="v-pills-add" aria-selected="false">Tambah Data</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <a class="nav-link" id="v-pills-delete-tab" data-bs-toggle="pill" href="#v-pills-delete"
+                        role="tab" aria-controls="v-pills-delete" aria-selected="false">Hapus Data</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="v-pills-search" role="tabpanel"
+                      aria-labelledby="v-pills-search-tab">
+                      <div class="container">
+                        <form id="myFormBPKB" onsubmit="searchBPKB(); return false;" class="form">
+                          <h4 class="title">Cari Kendaraan Dinas Kabupaten Sampang</h4>
+                          <p class="message"></p>
+                          <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-12">
+                              <fieldset>
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">Cari Berdasarkan</span>
+                                  </div>
+                                  <select id="berdasar" name="berdasar" class="input form-control"
+                                    style="max-width: max-content;">
+                                    <option value="Nopol">Nopol</option>
+                                    <option value="Nosin">Nomor Mesin</option>
+                                    <option value="Norangka">Nomor Rangka</option>
+                                  </select>
+                                  <input type="text" aria-label="Last name" class="form-control"
+                                    placeholder="Masukkan Nopol" required id="kataKunci" autocomplete="off">
                                 </div>
-                              </div>
-                              <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary me-1 mb-1" id="cariBPKB">Cari</button>
-                                <button type="button" class="btn btn-secondary me-1 mb-1 d-none" id="loading" disabled>
-                                  Loading
-                                </button>
-                              </div>
-                            </form>
-                            <div id="tempatHasil"></div>
+                              </fieldset>
+                              <script>
+                                document
+                                  .getElementById("berdasar")
+                                  .addEventListener("change", function () {
+                                    var selectedOption = this.options[this.selectedIndex].value;
+                                    if (selectedOption == "Nopol") {
+                                      var isi = "Nopol";
+                                    } else if (selectedOption == "Nosin") {
+                                      var isi = "Nomor Mesin";
+                                    } else {
+                                      var isi = "Nomor Rangka";
+                                    }
+                                    document.getElementById("kataKunci").placeholder = "Masukkan " + isi;
+                                  });
+                              </script>
+                            </div>
                           </div>
-                          <script>
-                            async function searchBPKB() {
-                              const btnSubmit = document.getElementById("cariBPKB");
-                              const btnLoad = document.getElementById("loading");
-                              const tempatHasil = document.getElementById("tempatHasil");
-                              const berdasar = document.getElementById("berdasar").value;
-                              const kataKunci_input = document.getElementById("kataKunci").value;
-                              const kataKunci = upperCase(kataKunci_input);
-                              tempatHasil.innerHTML = "";
-                              const url = `https://script.google.com/macros/s/AKfycbxsVHAieliT4yi36gSKgd2kjQLJzSJdF3JSp2wjCNN0eAoqFTyNGxozqwBxqARi5Xea/exec?berdasar=${berdasar}&kataKunci=${kataKunci}`; // Ganti dengan URL web app Anda
-
-                              btnSubmit.classList.toggle("d-none");
-                              btnLoad.classList.toggle("d-none");
-
-                              try {
-                                const response = await fetch(url);
-                                const data = await response.json();
-
-                                if (data.nopol) {
-                                  const dataHasil = `<table id="tabelHasil"  class="table table-lg">
-                                                                                                          <caption>
-                                                                                                              <h5 class="caption">Hasil Pencarian</h5>
-                                                                                                          </caption>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">SKPD</th>
-                                                                                                              <td colspan="2">${data.skpd}</th>
-                                                                                                          </tr>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">Spek Kendaraan</td>
-                                                                                                              <td>${data.spekKendaraan}</td>
-                                                                                                              <th>${data.namaKendaraan}</td>
-                                                                                                          </tr>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">Nopol</td>
-                                                                                                              <td>${data.nopol}</td>
-                                                                                                              <td>${data.nourutBI}</td>
-                                                                                                          </tr>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">No. Mesin</td>
-                                                                                                              <td>${data.nosin}</td>
-                                                                                                              <td>${data.nourutDB}</td>
-                                                                                                          </tr>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">No. Rangka</td>
-                                                                                                              <td colspan="2">${data.norang}</td>
-                                                                                                          </tr>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">No. BPKB</td>
-                                                                                                              <td>${data.noBPKB}</td>
-                                                                                                              <th>${data.masaBerlaku}</th>
-                                                                                                          </tr>
-                                                                                                          <tr>
-                                                                                                              <th class="lebar20">Pemegang</td>
-                                                                                                              <td>${data.pemegang}</td>
-                                                                                                              <td>${data.jabatan}</td>
-                                                                                                          </tr>
-                                                                                                      </table>`;
-                                  tempatHasil.innerHTML = dataHasil;
-                                } else {
-                                  document.getElementById("tempatHasil").innerHTML =
-                                    '<div  class="form"><div class="caption"><h6>Data tidak ditemukan.</h6></div></div>';
-                                }
-                                btnSubmit.classList.toggle("d-none");
-                                btnLoad.classList.toggle("d-none");
-                              } catch (error) {
-                                document.getElementById("tempatHasil").innerHTML =
-                                  '<div  class="form"><div class="caption"><h6>Error fetching data.</h6></div></div>';
-                                console.error("Error:", error);
-                                btnSubmit.classList.toggle("d-none");
-                                btnLoad.classList.toggle("d-none");
-                              }
-                              document.getElementById("kataKunci").value = "";
-                            }
-
-                            function upperCase(teks) {
-                              var berdasar = document.getElementById("berdasar").value;
-
-                              if (berdasar == "Nopol") {
-                                // Pisahkan plat nomor menjadi bagian-bagian
-                                let platNomor = teks.trim().replace(/\s+/g, "");
-                                // Gunakan ekspresi reguler untuk memisahkan bagian-bagian plat nomor
-                                let match = platNomor.match(/^([a-zA-Z]+)(\d+)([a-zA-Z]+)$/);
-                                if (match) {
-                                  // Ambil bagian-bagian yang ditemukan
-                                  let bagian1 = match[1].toUpperCase();
-                                  let bagian2 = match[2];
-                                  let bagian3 = match[3].toUpperCase();
-                                  // Gabungkan kembali bagian-bagian tersebut dengan format yang diinginkan
-                                  let platNomorBaru = `${bagian1} ${bagian2} ${bagian3}`;
-                                  return platNomorBaru;
-                                }
-                              } else {
-                                return teks;
-                              }
-                            }
-                          </script>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-update" role="tabpanel"
-                          aria-labelledby="v-pills-update-tab">
-                          Integer interdum diam eleifend metus lacinia, quis gravida eros mollis. Fusce
-                          non sapien sit amet magna dapibus
-                          ultrices. Morbi tincidunt magna ex, eget faucibus sapien bibendum non. Duis a
-                          mauris ex. Ut finibus risus sed massa
-                          mattis porta. Aliquam sagittis massa et purus efficitur ultricies.
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab">
-                          Integer pretium dolor at sapien laoreet ultricies. Fusce congue et lorem id
-                          convallis. Nulla volutpat tellus nec
-                          molestie finibus. In nec odio tincidunt eros finibus ullamcorper. Ut sodales,
-                          dui nec posuere finibus, nisl sem aliquam
-                          metus, eu accumsan lacus felis at odio.
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-delete" role="tabpanel"
-                          aria-labelledby="v-pills-delete-tab">
-                          Sed lacus quam, convallis quis condimentum ut, accumsan congue massa.
-                          Pellentesque et quam vel massa pretium ullamcorper
-                          vitae eu tortor.
-                        </div>
+                          <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary me-1 mb-1" id="cariBPKB">Cari</button>
+                            <button type="button" class="btn btn-secondary me-1 mb-1 d-none" id="loading" disabled>
+                              Loading
+                            </button>
+                          </div>
+                        </form>
+                        <div id="tempatHasil"></div>
                       </div>
+                      <script>
+                        async function searchBPKB() {
+                          const btnSubmit = document.getElementById("cariBPKB");
+                          const btnLoad = document.getElementById("loading");
+                          const tempatHasil = document.getElementById("tempatHasil");
+                          const berdasar = document.getElementById("berdasar").value;
+                          const kataKunci_input = document.getElementById("kataKunci").value;
+                          const kataKunci = upperCase(kataKunci_input);
+                          tempatHasil.innerHTML = "";
+                          const url = `https://script.google.com/macros/s/AKfycbxsVHAieliT4yi36gSKgd2kjQLJzSJdF3JSp2wjCNN0eAoqFTyNGxozqwBxqARi5Xea/exec?berdasar=${berdasar}&kataKunci=${kataKunci}`; // Ganti dengan URL web app Anda
+
+                          btnSubmit.classList.toggle("d-none");
+                          btnLoad.classList.toggle("d-none");
+
+                          try {
+                            const response = await fetch(url);
+                            const data = await response.json();
+
+                            if (data.nopol) {
+                              const dataHasil = `<table id="tabelHasil"  class="table table-lg">
+                                                                                                                            <caption>
+                                                                                                                                <h5 class="caption">Hasil Pencarian</h5>
+                                                                                                                            </caption>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">SKPD</th>
+                                                                                                                                <td colspan="2">${data.skpd}</th>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">Spek Kendaraan</td>
+                                                                                                                                <td>${data.spekKendaraan}</td>
+                                                                                                                                <th>${data.namaKendaraan}</td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">Nopol</td>
+                                                                                                                                <td>${data.nopol}</td>
+                                                                                                                                <td>${data.nourutBI}</td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">No. Mesin</td>
+                                                                                                                                <td>${data.nosin}</td>
+                                                                                                                                <td>${data.nourutDB}</td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">No. Rangka</td>
+                                                                                                                                <td colspan="2">${data.norang}</td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">No. BPKB</td>
+                                                                                                                                <td>${data.noBPKB}</td>
+                                                                                                                                <th>${data.masaBerlaku}</th>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <th class="lebar20">Pemegang</td>
+                                                                                                                                <td>${data.pemegang}</td>
+                                                                                                                                <td>${data.jabatan}</td>
+                                                                                                                            </tr>
+                                                                                                                        </table>`;
+                              tempatHasil.innerHTML = dataHasil;
+                            } else {
+                              document.getElementById("tempatHasil").innerHTML =
+                                '<div  class="form"><div class="caption"><h6>Data tidak ditemukan.</h6></div></div>';
+                            }
+                            btnSubmit.classList.toggle("d-none");
+                            btnLoad.classList.toggle("d-none");
+                          } catch (error) {
+                            document.getElementById("tempatHasil").innerHTML =
+                              '<div  class="form"><div class="caption"><h6>Error fetching data.</h6></div></div>';
+                            console.error("Error:", error);
+                            btnSubmit.classList.toggle("d-none");
+                            btnLoad.classList.toggle("d-none");
+                          }
+                          document.getElementById("kataKunci").value = "";
+                        }
+
+                        function upperCase(teks) {
+                          var berdasar = document.getElementById("berdasar").value;
+
+                          if (berdasar == "Nopol") {
+                            // Pisahkan plat nomor menjadi bagian-bagian
+                            let platNomor = teks.trim().replace(/\s+/g, "");
+                            // Gunakan ekspresi reguler untuk memisahkan bagian-bagian plat nomor
+                            let match = platNomor.match(/^([a-zA-Z]+)(\d+)([a-zA-Z]+)$/);
+                            if (match) {
+                              // Ambil bagian-bagian yang ditemukan
+                              let bagian1 = match[1].toUpperCase();
+                              let bagian2 = match[2];
+                              let bagian3 = match[3].toUpperCase();
+                              // Gabungkan kembali bagian-bagian tersebut dengan format yang diinginkan
+                              let platNomorBaru = `${bagian1} ${bagian2} ${bagian3}`;
+                              return platNomorBaru;
+                            }
+                          } else {
+                            return teks;
+                          }
+                        }
+                      </script>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-update" role="tabpanel" aria-labelledby="v-pills-update-tab">
+                      Integer interdum diam eleifend metus lacinia, quis gravida eros mollis. Fusce
+                      non sapien sit amet magna dapibus
+                      ultrices. Morbi tincidunt magna ex, eget faucibus sapien bibendum non. Duis a
+                      mauris ex. Ut finibus risus sed massa
+                      mattis porta. Aliquam sagittis massa et purus efficitur ultricies.
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab">
+                      Integer pretium dolor at sapien laoreet ultricies. Fusce congue et lorem id
+                      convallis. Nulla volutpat tellus nec
+                      molestie finibus. In nec odio tincidunt eros finibus ullamcorper. Ut sodales,
+                      dui nec posuere finibus, nisl sem aliquam
+                      metus, eu accumsan lacus felis at odio.
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
+                      Sed lacus quam, convallis quis condimentum ut, accumsan congue massa.
+                      Pellentesque et quam vel massa pretium ullamcorper
+                      vitae eu tortor.
                     </div>
                   </div>
                 </div>
