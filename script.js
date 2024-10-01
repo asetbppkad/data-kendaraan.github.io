@@ -906,3 +906,185 @@ document.getElementById("tempatModal").innerHTML = data_modal;
 // document.addEventListener("contextmenu", function (e) {
 //   e.preventDefault(); // Mencegah aksi default saat klik kanan
 // });
+
+function Cari() {
+  const btnTambah = document.getElementById("tambah-daftar");
+  const btnSubmit = document.getElementById("cariBPKB");
+  const btnLoad = document.getElementById("loading");
+  const tempatHasil = document.getElementById("tempatHasil");
+  // const berdasar = document.getElementById("berdasar").value;
+  const kataKunci_input = document.getElementById("kataKunci").value;
+  const kataKunci = upperCase(kataKunci_input);
+  if (!btnTambah.classList.contains("d-none")) {
+    btnTambah.classList.add("d-none");
+  }
+  tempatHasil.innerHTML = "";
+
+  btnSubmit.classList.toggle("d-none");
+  btnLoad.classList.toggle("d-none");
+
+  const data_coba = JSON.parse(localStorage.getItem("dataKendaraan"));
+  const identitas_kendaraan = data_coba.find(
+    (item) => item.No_Pol === kataKunci
+  );
+  if (identitas_kendaraan) {
+    const dataHasil =
+      `<table id="tabelHasil"  class="table table-lg">
+                                                    <caption>
+                                                        <h5 class="caption">Hasil Pencarian</h5>
+                                                    </caption>
+                                                    <tr>
+                                                        <th class="lebar20">SKPD</th>
+                                                        <td colspan="2">` +
+      identitas_kendaraan.SKPD +
+      `</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">Spek Kendaraan</td>
+                                                        <td>` +
+      identitas_kendaraan.Spesifikasi_Barang_MERK +
+      `</td>
+                                                        <th>` +
+      identitas_kendaraan.Nama_Barang +
+      `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">Nopol</td>
+                                                        <td>` +
+      identitas_kendaraan.No_Pol +
+      `</td>
+                                                        <td>Nomor Urut BI : ` +
+      identitas_kendaraan.No_Urut_di_BI +
+      `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">No. Mesin</td>
+                                                        <td>` +
+      identitas_kendaraan.No_Mesin +
+      `</td>
+                                                        <td>Nomor Urut Data : ` +
+      identitas_kendaraan.No_ +
+      `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">No. Rangka</td>
+                                                        <td colspan="2">` +
+      identitas_kendaraan.No_Rangka +
+      `</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">No. BPKB</td>
+                                                        <td>` +
+      identitas_kendaraan.No_BPKB +
+      `</td>
+                                                        <th>Berlaku Sampai ` +
+      identitas_kendaraan.Tanggal_Jatuh_Tempo +
+      `</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="lebar20">Pemegang</td>
+                                                        <td>` +
+      identitas_kendaraan.Nama_Pemakai +
+      `</td>
+                                                        <td>` +
+      identitas_kendaraan.Jabatan +
+      `</td>
+                                                    </tr>
+                                                  </table>
+                                                  `;
+    tempatHasil.innerHTML = dataHasil;
+    localStorage.setItem(
+      "identity-Vehicle",
+      JSON.stringify(identitas_kendaraan)
+    );
+    btnTambah.classList.toggle("d-none");
+  } else {
+    document.getElementById("tempatHasil").innerHTML =
+      '<div  class="form"><div class="caption"><h6>Data tidak ditemukan.</h6></div></div>';
+  }
+  btnSubmit.classList.toggle("d-none");
+  btnLoad.classList.toggle("d-none");
+  document.getElementById("kataKunci").value = "";
+}
+
+function tambahDaftar() {
+  const data_perpanjang = JSON.parse(localStorage.getItem("identity-Vehicle"));
+
+  const dataSudahAda = localStorage.getItem("dataPerpanjang");
+  // Inisialisasi array untuk menyimpan data
+  let dataArray = [];
+  if (dataSudahAda) {
+    dataArray = JSON.parse(dataSudahAda);
+  } else {
+    dataArray = [];
+  }
+  // Tambahkan objek baru ke array
+  dataArray.push(data_perpanjang);
+  // Simpan kembali array yang sudah diperbarui ke localStorage
+  localStorage.setItem("dataPerpanjang", JSON.stringify(dataArray));
+  tambahList();
+}
+
+function tambahList() {
+  // Ambil data dari localStorage
+  const storedData = localStorage.getItem("dataPerpanjang");
+  // Ambil elemen tbody dari table
+  const tbody = document.getElementById("dataPerpanjangTableBody");
+  // Bersihkan isi tbody terlebih dahulu
+  tbody.innerHTML = "";
+  if (storedData) {
+    // Ubah string JSON menjadi array
+    const dataSetor = JSON.parse(storedData);
+
+    // Tambahkan setiap objek ke dalam <ul>
+    dataSetor.forEach((item) => {
+      // Buat elemen <tr> menggunakan template literals
+      const tr = `
+          <tr>
+            <td class="text-bold-500">${item.No_Pol}</td>
+            <td>
+              <a href="#">X</a>
+            </td>
+          </tr>
+        `;
+
+      // Tambahkan <tr> ke dalam tbody
+      tbody.innerHTML += tr; // Menambahkan baris baru ke tbody
+    });
+  } else {
+    // Jika tidak ada data di localStorage
+    const tr = `
+        <tr>
+          <td colspan="2" style="text-align: center;">Tidak ada data</td>
+        </tr>
+      `;
+    tbody.innerHTML += tr; // Menambahkan baris kosong jika tidak ada data
+  }
+}
+
+function cetakDaftar() {
+  localStorage.removeItem("identity-Vehicle");
+  localStorage.removeItem("dataPerpanjang");
+}
+
+function upperCase(teks) {
+  var berdasar = document.getElementById("berdasar").value;
+
+  if (berdasar == "Nopol") {
+    // Pisahkan plat nomor menjadi bagian-bagian
+    let platNomor = teks.trim().replace(/\s+/g, "");
+    // Gunakan ekspresi reguler untuk memisahkan bagian-bagian plat nomor
+    let match = platNomor.match(/^([a-zA-Z]+)(\d+)([a-zA-Z]+)$/);
+    if (match) {
+      // Ambil bagian-bagian yang ditemukan
+      let bagian1 = match[1].toUpperCase();
+      let bagian2 = match[2];
+      let bagian3 = match[3].toUpperCase();
+      // Gabungkan kembali bagian-bagian tersebut dengan format yang diinginkan
+      let platNomorBaru = `${bagian1} ${bagian2} ${bagian3}`;
+      return platNomorBaru;
+    }
+  } else {
+    return teks;
+  }
+}
