@@ -524,6 +524,18 @@ function cekLog() {
       link_stock:
         "https://drive.google.com/drive/folders/1yfRAAt_2zyrfJK6lHsTWYtHQ2RzlY_8f",
     },
+    {
+      name: "RYAN PRESI H.L., A.Md.Pnl.",
+      username: "ryan_aset",
+      password: "ryanaset",
+      id_role: "1",
+      is_active: "1",
+      akronim: "RYAN",
+      link_bi:
+        "https://drive.google.com/drive/folders/16UpYHQG6jbikV45bcxu_uwsiH2sCVk7i",
+      link_stock:
+        "https://drive.google.com/drive/folders/1yfRAAt_2zyrfJK6lHsTWYtHQ2RzlY_8f",
+    },
   ];
 
   const user = users.find((user) => user.username === username_input);
