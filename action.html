@@ -196,198 +196,133 @@
                     <div class="tab-pane fade show active" id="v-pills-search" role="tabpanel"
                       aria-labelledby="v-pills-search-tab">
                       <div class="container">
-                        <form id="myFormBPKB" onsubmit="searchBPKB(); return false;" class="form">
-                          <h4 class="title">Cari Kendaraan Dinas Kabupaten Sampang</h4>
-                          <p class="message"></p>
-                          <div class="row" style="margin-bottom: 15px;">
-                            <div class="col-12">
-                              <fieldset>
-                                <div class="input-group">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text">Cari Berdasarkan</span>
-                                  </div>
-                                  <select id="berdasar" name="berdasar" class="input form-control"
-                                    style="max-width: max-content;">
-                                    <option value="Nopol">Nopol</option>
-                                    <option value="Nosin">Nomor Mesin</option>
-                                    <option value="Norangka">Nomor Rangka</option>
-                                  </select>
-                                  <input type="text" aria-label="Last name" class="form-control"
-                                    placeholder="Masukkan Nopol" required id="kataKunci" autocomplete="off">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <form id="myFormBPKB" onsubmit="searchBPKB(); return false;" class="form">
+                              <h4 class="title">Cari Kendaraan Dinas Kabupaten Sampang</h4>
+                              <p class="message"></p>
+                              <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-12">
+                                  <fieldset>
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Cari Berdasarkan</span>
+                                      </div>
+                                      <select id="berdasar" name="berdasar" class="input form-control"
+                                        style="max-width: max-content;">
+                                        <option value="Nopol">Nopol</option>
+                                        <option value="Nosin">Nomor Mesin</option>
+                                        <option value="Norangka">Nomor Rangka</option>
+                                      </select>
+                                      <input type="text" aria-label="Last name" class="form-control"
+                                        placeholder="Masukkan Nopol" required id="kataKunci" autocomplete="off">
+                                    </div>
+                                  </fieldset>
+                                  <script>
+                                    document
+                                      .getElementById("berdasar")
+                                      .addEventListener("change", function () {
+                                        var selectedOption = this.options[this.selectedIndex].value;
+                                        if (selectedOption == "Nopol") {
+                                          var isi = "Nopol";
+                                        } else if (selectedOption == "Nosin") {
+                                          var isi = "Nomor Mesin";
+                                        } else {
+                                          var isi = "Nomor Rangka";
+                                        }
+                                        document.getElementById("kataKunci").placeholder = "Masukkan " + isi;
+                                      });
+                                  </script>
                                 </div>
-                              </fieldset>
-                              <script>
-                                document
-                                  .getElementById("berdasar")
-                                  .addEventListener("change", function () {
-                                    var selectedOption = this.options[this.selectedIndex].value;
-                                    if (selectedOption == "Nopol") {
-                                      var isi = "Nopol";
-                                    } else if (selectedOption == "Nosin") {
-                                      var isi = "Nomor Mesin";
-                                    } else {
-                                      var isi = "Nomor Rangka";
-                                    }
-                                    document.getElementById("kataKunci").placeholder = "Masukkan " + isi;
-                                  });
-                              </script>
+                              </div>
+                              <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1" id="cariBPKB"
+                                  onclick="Cari()">Cari</button>
+                                <button type="button" class="btn btn-secondary me-1 mb-1 d-none" id="loading" disabled>
+                                  Loading
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="col-md-4" id="itemList">
+                            <div class="table-responsive">
+                              <h6 class="card-title">Daftar Perpanjangan</h6>
+                              <table class="table table-borderless mb-0">
+                                <thead>
+                                  <tr>
+                                    <th>NOPOL</th>
+                                    <th>ACTION</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="dataPerpanjangTableBody">
+                                  <tr>
+                                    <td colspan="2" style="text-align: center;">Tidak ada data</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div class="d-flex justify-content-end"></div>
+                              <button type="button" class="btn btn-success me-1 mb-1" id="cetak-daftar"
+                                onclick="cetakDaftar()">Cetak</button>
                             </div>
                           </div>
-                          <div class="col-12 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary me-1 mb-1" id="cariBPKB">Cari</button>
-                            <button type="button" class="btn btn-secondary me-1 mb-1 d-none" id="loading" disabled>
-                              Loading
-                            </button>
-                          </div>
-                        </form>
-                        <div id="tempatHasil"></div>
+                        </div>
                       </div>
-                      <script>
-                        async function searchBPKB() {
-                          const btnSubmit = document.getElementById("cariBPKB");
-                          const btnLoad = document.getElementById("loading");
-                          const tempatHasil = document.getElementById("tempatHasil");
-                          const berdasar = document.getElementById("berdasar").value;
-                          const kataKunci_input = document.getElementById("kataKunci").value;
-                          const kataKunci = upperCase(kataKunci_input);
-                          tempatHasil.innerHTML = "";
-                          const url = `https://script.google.com/macros/s/AKfycbxsVHAieliT4yi36gSKgd2kjQLJzSJdF3JSp2wjCNN0eAoqFTyNGxozqwBxqARi5Xea/exec?berdasar=${berdasar}&kataKunci=${kataKunci}`; // Ganti dengan URL web app Anda
-
-                          btnSubmit.classList.toggle("d-none");
-                          btnLoad.classList.toggle("d-none");
-
-                          try {
-                            const response = await fetch(url);
-                            const data = await response.json();
-
-                            if (data.nopol) {
-                              const dataHasil = `<table id="tabelHasil"  class="table table-lg">
-                                                                                                                            <caption>
-                                                                                                                                <h5 class="caption">Hasil Pencarian</h5>
-                                                                                                                            </caption>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">SKPD</th>
-                                                                                                                                <td colspan="2">${data.skpd}</th>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">Spek Kendaraan</td>
-                                                                                                                                <td>${data.spekKendaraan}</td>
-                                                                                                                                <th>${data.namaKendaraan}</td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">Nopol</td>
-                                                                                                                                <td>${data.nopol}</td>
-                                                                                                                                <td>${data.nourutBI}</td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">No. Mesin</td>
-                                                                                                                                <td>${data.nosin}</td>
-                                                                                                                                <td>${data.nourutDB}</td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">No. Rangka</td>
-                                                                                                                                <td colspan="2">${data.norang}</td>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">No. BPKB</td>
-                                                                                                                                <td>${data.noBPKB}</td>
-                                                                                                                                <th>${data.masaBerlaku}</th>
-                                                                                                                            </tr>
-                                                                                                                            <tr>
-                                                                                                                                <th class="lebar20">Pemegang</td>
-                                                                                                                                <td>${data.pemegang}</td>
-                                                                                                                                <td>${data.jabatan}</td>
-                                                                                                                            </tr>
-                                                                                                                        </table>`;
-                              tempatHasil.innerHTML = dataHasil;
-                            } else {
-                              document.getElementById("tempatHasil").innerHTML =
-                                '<div  class="form"><div class="caption"><h6>Data tidak ditemukan.</h6></div></div>';
-                            }
-                            btnSubmit.classList.toggle("d-none");
-                            btnLoad.classList.toggle("d-none");
-                          } catch (error) {
-                            document.getElementById("tempatHasil").innerHTML =
-                              '<div  class="form"><div class="caption"><h6>Error fetching data.</h6></div></div>';
-                            console.error("Error:", error);
-                            btnSubmit.classList.toggle("d-none");
-                            btnLoad.classList.toggle("d-none");
-                          }
-                          document.getElementById("kataKunci").value = "";
-                        }
-
-                        function upperCase(teks) {
-                          var berdasar = document.getElementById("berdasar").value;
-
-                          if (berdasar == "Nopol") {
-                            // Pisahkan plat nomor menjadi bagian-bagian
-                            let platNomor = teks.trim().replace(/\s+/g, "");
-                            // Gunakan ekspresi reguler untuk memisahkan bagian-bagian plat nomor
-                            let match = platNomor.match(/^([a-zA-Z]+)(\d+)([a-zA-Z]+)$/);
-                            if (match) {
-                              // Ambil bagian-bagian yang ditemukan
-                              let bagian1 = match[1].toUpperCase();
-                              let bagian2 = match[2];
-                              let bagian3 = match[3].toUpperCase();
-                              // Gabungkan kembali bagian-bagian tersebut dengan format yang diinginkan
-                              let platNomorBaru = `${bagian1} ${bagian2} ${bagian3}`;
-                              return platNomorBaru;
-                            }
-                          } else {
-                            return teks;
-                          }
-                        }
-                      </script>
+                      <div id="tempatHasil"></div>
+                      <div class="col-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary me-1 mb-1 d-none" id="tambah-daftar"
+                          onclick="tambahDaftar()">Tambahkan</button>
+                      </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-update" role="tabpanel" aria-labelledby="v-pills-update-tab">
-                      Integer interdum diam eleifend metus lacinia, quis gravida eros mollis. Fusce
-                      non sapien sit amet magna dapibus
-                      ultrices. Morbi tincidunt magna ex, eget faucibus sapien bibendum non. Duis a
-                      mauris ex. Ut finibus risus sed massa
-                      mattis porta. Aliquam sagittis massa et purus efficitur ultricies.
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab">
-                      Integer pretium dolor at sapien laoreet ultricies. Fusce congue et lorem id
-                      convallis. Nulla volutpat tellus nec
-                      molestie finibus. In nec odio tincidunt eros finibus ullamcorper. Ut sodales,
-                      dui nec posuere finibus, nisl sem aliquam
-                      metus, eu accumsan lacus felis at odio.
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
-                      Sed lacus quam, convallis quis condimentum ut, accumsan congue massa.
-                      Pellentesque et quam vel massa pretium ullamcorper
-                      vitae eu tortor.
-                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-update" role="tabpanel" aria-labelledby="v-pills-update-tab">
+                    Integer interdum diam eleifend metus lacinia, quis gravida eros mollis. Fusce
+                    non sapien sit amet magna dapibus
+                    ultrices. Morbi tincidunt magna ex, eget faucibus sapien bibendum non. Duis a
+                    mauris ex. Ut finibus risus sed massa
+                    mattis porta. Aliquam sagittis massa et purus efficitur ultricies.
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab">
+                    Integer pretium dolor at sapien laoreet ultricies. Fusce congue et lorem id
+                    convallis. Nulla volutpat tellus nec
+                    molestie finibus. In nec odio tincidunt eros finibus ullamcorper. Ut sodales,
+                    dui nec posuere finibus, nisl sem aliquam
+                    metus, eu accumsan lacus felis at odio.
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-delete" role="tabpanel" aria-labelledby="v-pills-delete-tab">
+                    Sed lacus quam, convallis quis condimentum ut, accumsan congue massa.
+                    Pellentesque et quam vel massa pretium ullamcorper
+                    vitae eu tortor.
                   </div>
                 </div>
               </div>
             </div>
-          </section>
         </div>
+        </section>
       </div>
+    </div>
 
-      <footer>
-        <div class="container">
-          <div class="footer clearfix mb-0 text-muted">
-            <div class="float-start">
-              <p><span id="tahun_footer"></span> &copy; Ismail Aset</p>
-              <script>
-                document.getElementById("tahun_footer").textContent =
-                  new Date().getFullYear();
-              </script>
-            </div>
-            <div class="float-end">
-              <p>
-                Crafted with
-                <span class="text-danger"><i class="bi bi-heart"></i></span>
-                by
-                <a href="https://wa.me/81913333320" target="_blank">Ismail Aset</a>
-              </p>
-            </div>
+    <footer>
+      <div class="container">
+        <div class="footer clearfix mb-0 text-muted">
+          <div class="float-start">
+            <p><span id="tahun_footer"></span> &copy; Ismail Aset</p>
+            <script>
+              document.getElementById("tahun_footer").textContent =
+                new Date().getFullYear();
+            </script>
+          </div>
+          <div class="float-end">
+            <p>
+              Crafted with
+              <span class="text-danger"><i class="bi bi-heart"></i></span>
+              by
+              <a href="https://wa.me/81913333320" target="_blank">Ismail Aset</a>
+            </p>
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
+  </div>
   </div>
   <script src="assets/js/bootstrap.js"></script>
   <script src="assets/js/app.js"></script>
