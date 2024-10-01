@@ -1,5 +1,5 @@
 const apiUrl =
-  "https://script.google.com/macros/s/AKfycbzcCjDVkR0AWoTl_gHf1BiSt3mR1SvmFict2b7bKLLmKyChn8LcXdpSmCvXmuDl6qYhJw/exec"; // Ganti dengan URL Web App Google Apps Script Anda
+  "https://script.google.com/macros/s/AKfycbwRFfDOfQwUbrJCl7nBTCTQhBhBJUywm9ejbpHfTKoqoWll41dRuVi99z0p2n9em91m7A/exec"; // Ganti dengan URL Web App Google Apps Script Anda
 
 // Fungsi untuk membaca data (GET request)
 function readData() {
@@ -11,7 +11,9 @@ function readData() {
   fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log("Data retrieved:", data);
+      // console.log("Data retrieved:", data);
+      // simpan data ke local storage
+      localStorage.setItem("dataKendaraan", JSON.stringify(data));
       // Tampilkan data ke dalam tabel di halaman
       displayData(data);
     })
