@@ -1062,6 +1062,8 @@ function tambahList() {
 
       // Tambahkan <tr> ke dalam tbody
       tbody.innerHTML += tr; // Menambahkan baris baru ke tbody
+      const cetakDaftar = document.getElementById("cetak-daftar");
+      cetakDaftar.classList.remove("d-none");
     });
   } else {
     // Jika tidak ada data di localStorage
